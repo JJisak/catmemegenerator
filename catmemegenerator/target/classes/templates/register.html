@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+</head>
+
+<body>
+<nav>
+    <div class="nav-wrapper blue">
+        <a href="#" class="brand-logo">MeowMeme</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/login">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a href="/login">Login</a></li>
+</ul>
+
+<br><br><br>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m8 offset-m2">
+            <div class="card">
+                <div class="card-content" style="height: 420px;"> <!-- Add fixed height to card-content -->
+                    <h2 class="card-title center-align">Registration</h2>
+                    <div th:if="${param.success}">
+                        <div class="card blue lighten-5">
+                            <div class="card-content blue-text">
+                                <p>You have successfully registered our app!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form method="post" role="form" th:action="@{/register/save}" th:object="${user}" class="col s12">
+
+                        <div class="input-field">
+                            <input type="text" id="firstName" name="firstName" class="validate"
+                                   placeholder="Enter first name" th:field="*{firstName}" required/>
+                            <label for="firstName">First Name</label>
+                            <span th:errors="*{firstName}" class="helper-text red-text" data-error="Invalid input"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <input type="text" id="lastName" name="lastName" class="validate"
+                                   placeholder="Enter last name" th:field="*{lastName}" required/>
+                            <label for="lastName">Last Name</label>
+                            <span th:errors="*{lastName}" class="helper-text red-text" data-error="Invalid input"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <input type="email" id="email" name="email" class="validate"
+                                   placeholder="Enter email address" th:field="*{email}" required/>
+                            <label for="email">Email</label>
+                            <span th:errors="*{email}" class="helper-text red-text" data-error="Invalid email"></span>
+                        </div>
+
+                        <div class="input-field">
+                            <input type="password" id="password" name="password" class="validate"
+                                   placeholder="Enter password" th:field="*{password}" required/>
+                            <label for="password">Password</label>
+                            <span th:errors="*{password}" class="helper-text red-text" data-error="Invalid password"></span>
+                        </div>
+
+                        <div class="center-align"> <!-- Move the buttons inside the card-content -->
+                            <button type="submit" class="btn waves-effect waves-light">Register</button>
+                            <span class="grey-text">Already registered? <a href="/login">Login here</a></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems);
+    });
+</script>
+</body>
+
+</html>

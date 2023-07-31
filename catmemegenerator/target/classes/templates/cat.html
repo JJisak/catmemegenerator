@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeowMeme Generator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <style>
+    .meme-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+    }
+
+    .save-button {
+      display: none;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .meme-container:hover .save-button {
+      display: block;
+    }
+
+    .meme-image {
+      position: relative;
+    }
+
+  </style>
+</head>
+
+<body>
+<nav>
+  <div class="nav-wrapper blue">
+    <a href="#" class="brand-logo center">MeowMeme</a>
+    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="#" th:href="@{/users}">Users</a></li>
+      <li><a href="#" th:href="@{/logout}">Logout</a></li>
+      <li><a href="/cat">Cat Memes</a></li>
+    </ul>
+  </div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo">
+  <li><a href="#" th:href="@{/users}">Users</a></li>
+  <li><a href="#" th:href="@{/logout}">Logout</a></li>
+  <li><a href="/cat">Cat Memes</a></li>
+</ul>
+
+<div class="container mt-4">
+  <header class="center-align">
+    <h1>MeowMeme Generator</h1>
+  </header>
+
+  <div class="row">
+    <form action="#" th:action="@{/generate-meme}" th:object="${memeForm}" method="post" class="col s12">
+      <div class="input-field">
+        <input type="text" th:field="*{text}" id="text" class="validate" required/>
+        <label for="text">Enter text</label>
+      </div>
+      <div class="center-align">
+        <button type="submit" class="btn waves-effect waves-light">Generate Meme</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="meme-container mt-4" th:if="${memeUrl}">
+    <div class="meme-image">
+      <img th:src="${memeUrl}" alt="Generated Meme" id="generated-meme" class="responsive-img"/>
+      <button class="save-button btn waves-effect waves-light" onclick="saveGeneratedMeme()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });
+
+  function goBack() {
+    window.history.back();
+  }
+
+  function decodeBase64Image(base64Image) {
+    var imageBlob = base64ToBlob(base64Image);
+    var imageUrl = URL.createObjectURL(imageBlob);
+    var link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = 'meme.jpg';
+    link.click();
+    URL.revokeObjectURL(imageUrl);
+    console.log('Meme saved successfully!');
+  }
+
+  function base64ToBlob(base64Data) {
+    var byteString = atob(base64Data);
+    var mimeString = 'image/jpeg';
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mimeString });
+  }
+
+  function saveGeneratedMeme() {
+    var generatedMeme = document.getElementById('generated-meme');
+    decodeBase64Image(generatedMeme.src.replace('data:image/jpeg;base64,', ''));
+  }
+</script>
+</body>
+
+</html>

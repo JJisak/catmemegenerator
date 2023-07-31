@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+</head>
+
+<body>
+<nav>
+    <div class="nav-wrapper blue">
+        <a href="#" class="brand-logo">MeowMeme</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a href="/register">Register</a></li>
+</ul>
+
+<div class="container">
+    <div class="row">
+        <div class="col s12 m8 offset-m2">
+            <div class="card">
+                <div class="card-content" style="height: 320px;"> <!-- Add fixed height to card-content -->
+                    <h2 class="card-title center-align">Login</h2>
+                    <form method="post" role="form" th:action="@{/login}" class="col s12">
+
+                        <div class="input-field">
+                            <input type="text" id="username" name="username" class="validate"
+                                   placeholder="Enter email address" required />
+                            <label for="username">Email</label>
+                        </div>
+
+                        <div class="input-field">
+                            <input type="password" id="password" name="password" class="validate"
+                                   placeholder="Enter password" required />
+                            <label for="password">Password</label>
+                        </div>
+
+                        <div class="center-align">
+                            <button type="submit" class="btn waves-effect waves-light">Submit</button>
+                            <span class="grey-text">Not registered?
+                                <a href="/register">Create Account</a>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems);
+    });
+</script>
+</body>
+
+</html>
